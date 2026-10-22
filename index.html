@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hats Off For Veterans — homepage concept</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Zilla+Slab:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0e1c30;
+    --navy-2: #172a4a;
+    --blue: #5389df;        /* sampled from the HOFV logo */
+    --blue-deep: #2854a7;   /* the logo's outline blue */
+    --blue-wash: #e9f0fb;
+    --red: #b3272d;
+    --red-dark: #931d23;
+    --paper: #f6f4ee;
+    --white: #ffffff;
+    --ink: #131a24;
+    --muted: #56606e;
+    --rule: #d9d5ca;
+    --rule-dark: rgba(255, 255, 255, .16);
+    --display: "Zilla Slab", Rockwell, Georgia, serif;
+    --body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+    --wrap: 1180px;
+    --gutter: clamp(18px, 4vw, 40px);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 17px/1.6 var(--body);
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: var(--blue-deep); text-underline-offset: 3px; }
+  a:hover { color: var(--navy); }
+  h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 2px; }
+  [id] { scroll-margin-top: 96px; }
+
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+  .section { padding: clamp(56px, 8vw, 104px) 0; }
+  .skip { position: absolute; left: -9999px; }
+  .skip:focus { left: 12px; top: 12px; z-index: 100; background: var(--white); padding: 10px 14px; }
+
+  /* Service-ribbon marker: the one recurring ornament on the page */
+  .eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    font: 700 .78rem/1 var(--body); letter-spacing: .14em; text-transform: uppercase;
+    color: var(--blue-deep); margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: ""; flex: none; width: 34px; height: 10px; border-radius: 1px;
+    background: linear-gradient(90deg, var(--blue) 0 34%, #fff 34% 44%, var(--red) 44% 56%, #fff 56% 66%, var(--blue) 66%);
+    box-shadow: 0 0 0 1px rgba(14, 28, 48, .18);
+  }
+  .on-dark .eyebrow { color: #a9c5f3; }
+  .on-dark .eyebrow::before { box-shadow: none; }
+
+  .h2 { font-size: clamp(1.9rem, 3.6vw, 2.75rem); }
+  .lede { font-size: 1.12rem; color: var(--muted); max-width: 60ch; margin-top: 16px; }
+  .on-dark .lede { color: #c5d0e0; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 48px; padding: 0 22px; border-radius: 3px; border: 2px solid transparent;
+    font: 700 .95rem/1 var(--body); letter-spacing: .02em; text-decoration: none; cursor: pointer;
+    transition: background-color .15s, border-color .15s, color .15s;
+  }
+  .btn-red { background: var(--red); color: #fff; }
+  .btn-red:hover { background: var(--red-dark); color: #fff; }
+  .btn-navy { background: var(--navy); color: #fff; }
+  .btn-navy:hover { background: var(--navy-2); color: #fff; }
+  .btn-ghost { border-color: rgba(255, 255, 255, .55); color: #fff; }
+  .btn-ghost:hover { border-color: #fff; background: rgba(255, 255, 255, .08); color: #fff; }
+  .btn-line { border-color: var(--navy); color: var(--navy); }
+  .btn-line:hover { background: var(--navy); color: #fff; }
+  .more { font-weight: 700; text-decoration: none; white-space: nowrap; }
+  .more::after { content: " \2192"; }
+  .more:hover { text-decoration: underline; }
+
+  /* ---------- Top bar + header ---------- */
+  .topbar { background: var(--navy); color: #d5deeb; font-size: 1rem; }
+  .topbar .wrap { display: flex; justify-content: space-between; gap: 8px 24px; flex-wrap: wrap; padding-top: 14px; padding-bottom: 14px; }
+  .topbar a { color: #fff; font-weight: 600; }
+  .topbar strong { color: #fff; }
+
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--white); border-bottom: 1px solid var(--rule); }
+  .site-header .wrap { display: flex; align-items: center; gap: 20px; min-height: 82px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); margin-right: auto; }
+  .brand img { width: 54px; height: auto; }
+  .brand span { font: 700 1.22rem/1.05 var(--display); letter-spacing: .01em; }
+  .brand small { display: block; font: 600 .68rem/1 var(--body); letter-spacing: .13em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+
+  .nav { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
+  .nav > li { position: relative; }
+  .nav > li > a, .nav > li > button {
+    display: flex; align-items: center; gap: 7px; height: 46px; padding: 0 13px;
+    font: 600 1.03rem/1 var(--body); color: var(--ink); text-decoration: none;
+    background: none; border: 0; cursor: pointer; border-radius: 3px;
+  }
+  .nav > li > button::after { content: ""; width: 6px; height: 6px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); }
+  .nav > li > a:hover, .nav > li > button:hover, .nav > li:focus-within > button { background: var(--blue-wash); color: var(--navy); }
+  .drop {
+    position: absolute; top: 100%; left: 0; min-width: 250px; list-style: none; margin: 0; padding: 8px;
+    background: var(--white); border: 1px solid var(--rule); border-top: 3px solid var(--blue); border-radius: 0 0 4px 4px;
+    box-shadow: 0 18px 40px -18px rgba(14, 28, 48, .35);
+    opacity: 0; visibility: hidden; transform: translateY(4px); transition: opacity .12s, transform .12s, visibility .12s;
+  }
+  .nav > li:hover > .drop, .nav > li:focus-within > .drop { opacity: 1; visibility: visible; transform: none; }
+  .drop a { display: block; padding: 10px 12px; color: var(--ink); text-decoration: none; font-size: .99rem; border-radius: 3px; }
+  .drop a:hover { background: var(--blue-wash); color: var(--navy); }
+  .header-cta { min-height: 44px; }
+  .menu-toggle { display: none; }
+
+  /* ---------- Hero ---------- */
+  .hero { background: var(--navy); color: #fff; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+  .hero-copy { padding: clamp(48px, 7vw, 96px) clamp(24px, 4vw, 64px) clamp(48px, 7vw, 96px) max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter))); align-self: center; }
+  .hero h1 { font-size: clamp(2.25rem, 4.3vw, 3.55rem); line-height: 1.04; letter-spacing: -.005em; }
+  .hero h1 em { font-style: normal; color: #9fc0f5; }
+  .hero p { font-size: 1.13rem; color: #c9d4e4; max-width: 46ch; margin-top: 22px; }
+  .hero .eyebrow { font-size: .8rem; color: #a9c5f3; max-width: none; margin-top: 0; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .hero-photo { position: relative; min-height: 420px; }
+  .hero-photo { overflow: hidden; background: var(--navy-2); }
+  .slide { position: absolute; inset: 0; margin: 0; opacity: 0; visibility: hidden; transition: opacity .9s ease, visibility 0s linear .9s; }
+  .slide.is-active { opacity: 1; visibility: visible; transition: opacity .9s ease; }
+  .slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .slide figcaption { position: absolute; right: 0; bottom: 0; margin: 0; background: rgba(14, 28, 48, .82); color: #dfe6f1; font-size: .8rem; padding: 8px 13px; max-width: 62%; }
+  .slide-controls { position: absolute; left: 14px; bottom: 12px; z-index: 2; display: flex; align-items: center; gap: 4px; background: rgba(14, 28, 48, .82); border-radius: 999px; padding: 4px 6px; }
+  .slide-controls button { width: 34px; height: 34px; display: grid; place-items: center; background: none; border: 0; border-radius: 50%; color: #fff; cursor: pointer; font: 700 1rem/1 var(--body); }
+  .slide-controls button:hover { background: rgba(255, 255, 255, .16); }
+  .slide-dots { display: flex; gap: 2px; padding: 0 2px; }
+  .slide-dots button { width: 22px; height: 34px; }
+  .slide-dots button::before { content: ""; width: 9px; height: 9px; border-radius: 50%; border: 2px solid #fff; }
+  .slide-dots button[aria-current="true"]::before { background: #fff; }
+
+  .notice { background: var(--blue-deep); color: #fff; }
+  .notice .wrap { display: flex; align-items: center; justify-content: space-between; gap: 10px 24px; flex-wrap: wrap; padding-top: 14px; padding-bottom: 14px; }
+  .notice b { font: 700 .76rem/1 var(--body); letter-spacing: .14em; text-transform: uppercase; background: #fff; color: var(--blue-deep); padding: 6px 9px; border-radius: 2px; margin-right: 12px; }
+  .notice a { color: #fff; font-weight: 700; }
+
+  /* ---------- Facts ---------- */
+  .facts { background: var(--white); border-bottom: 1px solid var(--rule); }
+  .facts ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .facts li { padding: 30px 24px; border-left: 1px solid var(--rule); }
+  .facts li:first-child { border-left: 0; padding-left: 0; }
+  .facts strong { display: block; font: 700 clamp(1.9rem, 3vw, 2.5rem)/1 var(--display); color: var(--navy); }
+  .facts span { display: block; margin-top: 8px; font-size: .93rem; color: var(--muted); line-height: 1.4; }
+
+  /* ---------- Mission + sign-up ---------- */
+  .mission .wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .mission-lead { font: 600 clamp(1.45rem, 2.5vw, 1.95rem)/1.28 var(--display); color: var(--navy); text-wrap: pretty; }
+  .mission-rest { margin-top: 20px; color: var(--muted); font-size: 1.08rem; max-width: 56ch; }
+  .mission .more { display: inline-block; margin-top: 22px; }
+
+  .signup { background: var(--navy); color: #fff; padding: clamp(28px, 4vw, 44px); border-radius: 4px; border-top: 6px solid var(--blue); }
+  .signup h2 { font-size: clamp(1.5rem, 2.4vw, 1.9rem); }
+  .signup p { color: #c5d0e0; margin-top: 12px; font-size: 1rem; }
+  .signup form { margin-top: 24px; display: grid; gap: 10px; }
+  .signup label { font: 600 .82rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: #a9c5f3; }
+  .signup input {
+    width: 100%; min-height: 52px; padding: 0 16px; border-radius: 3px; border: 2px solid transparent;
+    font: 400 1.05rem var(--body); color: var(--ink); background: #fff;
+  }
+  .signup input:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .signup .btn { width: 100%; min-height: 52px; font-size: 1rem; }
+  .signup .form-note { font-size: .9rem; color: #a9c5f3; margin-top: 4px; }
+  .signup .form-note:empty { display: none; }
+
+  /* ---------- Programs ---------- */
+  .programs { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(32px, 5vw, 56px); }
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 36px); }
+  .card { display: flex; flex-direction: column; }
+  .card figure { margin: 0; position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; background: var(--paper); }
+  .card figure img { width: 100%; height: 100%; object-fit: cover; }
+  .chip { position: absolute; left: 12px; top: 12px; font: 700 .72rem/1 var(--body); letter-spacing: .1em; text-transform: uppercase; padding: 8px 10px; border-radius: 2px; background: #fff; color: var(--navy); }
+  .chip.closed { background: var(--navy); color: #fff; }
+  .card h3 { font-size: 1.5rem; margin-top: 22px; min-height: 2.2em; }
+  .card p { color: var(--muted); margin-top: 10px; flex: 1; }
+  .card .more { margin-top: 18px; align-self: flex-start; }
+  .also { margin-top: clamp(36px, 5vw, 56px); padding-top: 26px; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+  .also b { font: 700 .78rem/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-right: 8px; }
+  .also a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border: 1px solid var(--rule); border-radius: 999px; text-decoration: none; color: var(--ink); font-weight: 600; font-size: .93rem; background: var(--paper); }
+  .also a:hover { border-color: var(--blue-deep); color: var(--blue-deep); }
+
+  /* ---------- Courage to Connect ---------- */
+  .connect { background: var(--navy); color: #fff; }
+  .groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 36px); margin-top: clamp(32px, 5vw, 52px); }
+  .group { border: 1px solid var(--rule-dark); border-top: 4px solid var(--blue); border-radius: 0 0 4px 4px; padding: clamp(24px, 3vw, 36px); background: rgba(255, 255, 255, .03); display: flex; flex-direction: column; }
+  .group h3 { font-size: 1.55rem; }
+  .group > p { color: #c5d0e0; margin-top: 10px; }
+  .group dl { margin: 24px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 20px; font-size: .98rem; padding-top: 20px; border-top: 1px solid var(--rule-dark); flex: 1; align-content: start; }
+  .group dt { color: #a9c5f3; font: 700 .76rem/1.9 var(--body); letter-spacing: .12em; text-transform: uppercase; }
+  .group dd { margin: 0; }
+  .group .btn { margin-top: 26px; align-self: flex-start; }
+  .assure { list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 28px; color: #dfe6f1; font-weight: 600; }
+  .assure li::before { content: ""; display: inline-block; width: 8px; height: 8px; background: var(--blue); margin-right: 10px; transform: translateY(-1px); }
+  .crisis { margin-top: clamp(28px, 4vw, 44px); padding: 18px 22px; border-left: 4px solid var(--red); background: rgba(255, 255, 255, .06); color: #e7ecf4; }
+  .crisis a { color: #fff; font-weight: 700; }
+
+  /* ---------- Voices ---------- */
+  .voices .wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); align-items: start; }
+  blockquote { margin: 0; }
+  .quote-lead p { font: 600 clamp(1.4rem, 2.5vw, 1.95rem)/1.3 var(--display); color: var(--navy); text-wrap: pretty; }
+  .quote-lead { margin-top: 28px; padding-left: 26px; border-left: 4px solid var(--blue); }
+  cite { display: block; margin-top: 16px; font: 700 .82rem/1.4 var(--body); letter-spacing: .1em; text-transform: uppercase; font-style: normal; color: var(--muted); }
+  .quote-list { display: grid; gap: 0; }
+  .quote-list blockquote { padding: 26px 0; border-top: 1px solid var(--rule); }
+  .quote-list blockquote:last-of-type { border-bottom: 1px solid var(--rule); }
+  .quote-list p { font-size: 1.08rem; }
+  .voices .more { display: inline-block; margin-top: 24px; }
+
+  /* ---------- Events ---------- */
+  .events { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .events .wrap > .cols { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); align-items: start; }
+  .agenda { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--navy); }
+  .agenda li { display: grid; grid-template-columns: 86px 1fr; gap: 22px; padding: 22px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+  .date { text-align: center; border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; background: var(--paper); }
+  .date b { display: block; background: var(--navy); color: #fff; font: 700 .74rem/1 var(--body); letter-spacing: .14em; text-transform: uppercase; padding: 7px 0; }
+  .date span { display: block; font: 700 1.9rem/1 var(--display); color: var(--navy); padding: 9px 0 3px; }
+  .date small { display: block; font-size: .74rem; color: var(--muted); padding-bottom: 8px; }
+  .agenda h3 { font-size: 1.28rem; }
+  .agenda p { color: var(--muted); margin-top: 6px; font-size: .98rem; }
+  .agenda .more { display: inline-block; margin-top: 8px; font-size: .95rem; }
+  .events figure { margin: 0; }
+  .events figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 3px; }
+  figcaption { font-size: .86rem; color: var(--muted); margin-top: 10px; }
+
+  /* ---------- Story ---------- */
+  .story .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .story figure { margin: 0; }
+  .story figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 3px; }
+  .story p { margin-top: 18px; color: var(--muted); max-width: 58ch; }
+  .timeline { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--rule); }
+  .timeline li { display: grid; grid-template-columns: 92px 1fr; gap: 18px; padding: 13px 0; border-bottom: 1px solid var(--rule); font-size: .98rem; }
+  .timeline b { font: 700 1.1rem/1.4 var(--display); color: var(--blue-deep); }
+  .story .more { display: inline-block; margin-top: 24px; }
+
+  /* ---------- Get involved ---------- */
+  .involve { background: var(--blue-wash); border-top: 1px solid #cfdcf3; }
+  .ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: clamp(28px, 4vw, 48px); border-top: 2px solid var(--navy); }
+  .way { padding: 30px clamp(18px, 2.4vw, 32px) 6px; border-left: 1px solid #c3d3ee; display: flex; flex-direction: column; }
+  .way:first-child { border-left: 0; padding-left: 0; }
+  .way h3 { font-size: 1.5rem; }
+  .way p { margin-top: 10px; color: #3d4756; flex: 1; }
+  .way .btn { margin-top: 22px; align-self: flex-start; }
+
+  /* ---------- Footer ---------- */
+  .site-footer { background: var(--navy); color: #c5d0e0; font-size: .95rem; }
+  .site-footer .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; padding: clamp(48px, 6vw, 72px) 0 40px; }
+  .site-footer h2 { font: 700 1.5rem/1.1 var(--display); color: #fff; }
+  .site-footer h3 { font: 700 .76rem/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: #a9c5f3; margin-bottom: 16px; }
+  .site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+  .site-footer a { color: #e7ecf4; text-decoration: none; }
+  .site-footer a:hover { color: #fff; text-decoration: underline; }
+  .site-footer .about { margin-top: 14px; max-width: 34ch; }
+  .legal { border-top: 1px solid var(--rule-dark); padding: 20px 0 28px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: .84rem; color: #9fb0c8; }
+
+  .concept-tag { position: fixed; left: 14px; bottom: 14px; z-index: 60; background: #fff; color: var(--navy); border: 1px solid var(--rule); border-left: 4px solid var(--blue); font: 600 .78rem/1.3 var(--body); padding: 8px 12px; border-radius: 2px; box-shadow: 0 8px 24px -12px rgba(14, 28, 48, .5); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1140px) {
+    .menu-toggle { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border: 2px solid var(--navy); border-radius: 3px; background: none; font: 700 .9rem var(--body); color: var(--navy); cursor: pointer; }
+    .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--rule); flex-direction: column; align-items: stretch; padding: 8px var(--gutter) 18px; max-height: calc(100vh - 80px); overflow: auto; }
+    .nav.open { display: flex; }
+    .nav > li > a, .nav > li > button { width: 100%; height: 48px; padding: 0 4px; font-size: 1.03rem; }
+    .nav > li > button { pointer-events: none; color: var(--muted); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; height: 40px; margin-top: 6px; }
+    .nav > li > button::after { display: none; }
+    .drop { position: static; opacity: 1; visibility: visible; transform: none; border: 0; box-shadow: none; padding: 0; min-width: 0; }
+    .drop a { padding: 10px 4px; font-size: 1rem; }
+    .site-header .wrap { position: relative; }
+  }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-photo { min-height: 0; aspect-ratio: 3 / 2; order: -1; }
+    .hero-copy { padding: 40px var(--gutter) 48px; }
+    .slide figcaption { top: 0; bottom: auto; max-width: 100%; }
+    .facts ul { grid-template-columns: repeat(2, 1fr); }
+    .facts li { padding: 22px 18px; }
+    .facts li:nth-child(odd) { border-left: 0; padding-left: 0; }
+    .facts li:nth-child(n+3) { border-top: 1px solid var(--rule); }
+    .mission .wrap, .voices .wrap, .story .wrap, .events .wrap > .cols { grid-template-columns: 1fr; }
+    .cards, .groups { grid-template-columns: 1fr; }
+    .card figure { aspect-ratio: 3 / 2; }
+    .card h3 { min-height: 0; }
+    .events figure img { aspect-ratio: 3 / 2; }
+    .ways { grid-template-columns: 1fr; }
+    .way { border-left: 0; padding: 26px 0 26px; border-bottom: 1px solid #c3d3ee; }
+    .site-footer .cols { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .brand small { display: none; }
+    .brand span { font-size: .98rem; }
+    .site-header .wrap { gap: 10px; }
+    .menu-toggle { padding: 0 11px; }
+    .brand img { width: 44px; }
+    .header-cta { padding: 0 14px; }
+    .hero-actions .btn { flex: 1 1 100%; }
+    .agenda li { grid-template-columns: 70px 1fr; gap: 16px; }
+    .site-footer .cols { grid-template-columns: 1fr; }
+    .concept-tag { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="wrap">
+    <span>HOFV is a <strong>100% volunteer-run</strong> Texas 501(c)(3) nonprofit.</span>
+    <span>In crisis? Veterans Crisis Line: <a href="https://ohofv.org/suicide%7Ccrisis-resources" target="_blank" rel="noopener">dial 988, then press 1</a></span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Hats Off For Veterans, home">
+      <img src="assets/logo-trim.png" alt="" width="600" height="586">
+      <span>Hats Off For Veterans<small>Kyle, Texas · Since 2005</small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <ul class="nav" id="site-nav">
+      <li><button type="button" aria-haspopup="true">About</button>
+        <ul class="drop">
+          <li><a href="https://ohofv.org/our-mission" target="_blank" rel="noopener">Our Mission</a></li>
+          <li><a href="https://ohofv.org/history-1" target="_blank" rel="noopener">History</a></li>
+          <li><a href="https://ohofv.org/staff-%7C-board" target="_blank" rel="noopener">Staff &amp; Board</a></li>
+          <li><a href="https://ohofv.org/regional-map" target="_blank" rel="noopener">Regional Map</a></li>
+          <li><a href="https://ohofv.org/testimonials" target="_blank" rel="noopener">Testimonials</a></li>
+        </ul>
+      </li>
+      <li><button type="button" aria-haspopup="true">How We Help</button>
+        <ul class="drop">
+          <li><a href="https://ohofv.org/educational-scholarships" target="_blank" rel="noopener">Educational Scholarships</a></li>
+          <li><a href="https://ohofv.org/professional-development" target="_blank" rel="noopener">Professional Development</a></li>
+          <li><a href="https://ohofv.org/msg-jq-scholarship" target="_blank" rel="noopener">MSG JQ Scholarship</a></li>
+          <li><a href="https://ohofv.org/mental-health-resources" target="_blank" rel="noopener">Mental Health Resources</a></li>
+          <li><a href="https://ohofv.org/workforce-assistance" target="_blank" rel="noopener">Workforce Assistance</a></li>
+          <li><a href="https://ohofv.org/va-and-legal-resources" target="_blank" rel="noopener">VA and Legal Resources</a></li>
+          <li><a href="https://ohofv.org/suicide%7Ccrisis-resources" target="_blank" rel="noopener">Suicide &amp; Crisis Resources</a></li>
+        </ul>
+      </li>
+      <li><button type="button" aria-haspopup="true">Events</button>
+        <ul class="drop">
+          <li><a href="https://ohofv.org/events" target="_blank" rel="noopener">Current Events</a></li>
+          <li><a href="https://ohofv.org/2027-o%3Ahofv" target="_blank" rel="noopener">2027 BBQ and Resource Fair</a></li>
+        </ul>
+      </li>
+      <li><button type="button" aria-haspopup="true">Get Involved</button>
+        <ul class="drop">
+          <li><a href="https://ohofv.org/volunteer-with-hofv" target="_blank" rel="noopener">Volunteer With HOFV</a></li>
+          <li><a href="https://ohofv.org/partner-with-hofv" target="_blank" rel="noopener">Partner With HOFV</a></li>
+          <li><a href="https://ohofv.org/special-programs" target="_blank" rel="noopener">Special Programs</a></li>
+          <li><a href="https://ohofv.org/job-opportunities" target="_blank" rel="noopener">Job Opportunities</a></li>
+        </ul>
+      </li>
+      <li><a href="https://ohofv.org/contact-1" target="_blank" rel="noopener">Contact</a></li>
+    </ul>
+    <a class="btn btn-red header-cta" href="https://ohofv.org/donate-1" target="_blank" rel="noopener">Donate</a>
+  </div>
+</header>
+
+<main id="main">
+  <span id="top"></span>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy on-dark">
+      <p class="eyebrow">For Texas veterans and their families</p>
+      <h1 id="hero-title">Scholarships, career grants and <em>peer support</em> for Texas veterans.</h1>
+      <p>Hats Off For Veterans is a 100% volunteer-run nonprofit, part of the Hays County community for over 21 years.</p>
+      <div class="hero-actions">
+        <a class="btn btn-red" href="#help">Find help</a>
+        <a class="btn btn-ghost" href="https://ohofv.org/donate-1" target="_blank" rel="noopener">Donate</a>
+      </div>
+    </div>
+    <div class="hero-photo" id="hero-slides" role="region" aria-roledescription="carousel" aria-label="Photos from Hats Off For Veterans events">
+      <figure class="slide is-active">
+        <img src="assets/1P2A0094.jpg" style="object-position:55% 40%" alt="A man in a cowboy hat and American flag shirt, arms spread wide, facing a full crowd under the pavilion at the Hats Off For Veterans BBQ.">
+        <figcaption>Operation: Hats Off For Veterans Family BBQ</figcaption>
+      </figure>
+      <figure class="slide">
+        <img src="assets/IMG_1771.jpg" style="object-position:50% 50%" alt="A group on an outdoor stage presents a large Hats Off For Veterans scholarship check for two thousand dollars.">
+        <figcaption>A 2026 Higher Education Scholarship presentation</figcaption>
+      </figure>
+      <figure class="slide">
+        <img src="assets/audience-pledge.jpg" style="object-position:68% 50%" alt="Families and veterans stand together on the lawn among resource-fair tents.">
+        <figcaption>The crowd at the 2025 BBQ and Resource Fair</figcaption>
+      </figure>
+      <figure class="slide">
+        <img src="assets/1C7A9266.jpg" style="object-position:62% 40%" alt="Three musicians perform on a wooden outdoor stage; one wears an Army shirt and cowboy hat.">
+        <figcaption>Roger Creager and his father, Army veteran Bill Creager, on stage in 2022</figcaption>
+      </figure>
+      <figure class="slide">
+        <img src="assets/jq-kyle-pringle.jpg" style="object-position:62% 50%" alt="U.S. Army veteran Kyle Pringle receives a one thousand dollar scholarship check on stage.">
+        <figcaption>The first MSG Jimmie Quintero Scholarship</figcaption>
+      </figure>
+      <div class="slide-controls">
+        <button type="button" data-slide="prev" aria-label="Previous photo">&#8249;</button>
+        <div class="slide-dots"></div>
+        <button type="button" data-slide="next" aria-label="Next photo">&#8250;</button>
+        <button type="button" data-slide="toggle" aria-label="Pause slideshow">&#10073;&#10073;</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="notice">
+    <div class="wrap">
+      <span><b>This Friday</b>3rd Annual Harry Potter Enchanted Yule Ball · October 16 · Texas Old Town, Kyle</span>
+      <a href="https://www.eventbrite.com/e/3rd-annual-hats-off-for-veterans-harry-potter-enchanted-yule-ball-tickets-1978211217002" target="_blank" rel="noopener">Get tickets &rarr;</a>
+    </div>
+  </div>
+
+  <section class="facts" aria-label="Hats Off For Veterans at a glance">
+    <div class="wrap">
+      <ul>
+        <li><strong>21+ years</strong><span>part of the Hays County community</span></li>
+        <li><strong>100%</strong><span>volunteer-run staff and board</span></li>
+        <li><strong>$2,000</strong><span>higher education scholarships awarded in 2026</span></li>
+        <li><strong>Up to $500</strong><span>per professional development grant</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section mission" id="mission">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Our mission</p>
+        <p class="mission-lead">At Hats Off For Veterans, we are dedicated to empowering Texas veterans and families through higher education scholarships, professional development grant opportunities, and access to mental health counseling resources.</p>
+        <p class="mission-rest">Our mission is to honor their service by equipping them with the tools and support needed to thrive in their personal and professional lives.</p>
+        <a class="more" href="https://ohofv.org/history-1" target="_blank" rel="noopener">How we got here</a>
+      </div>
+      <aside class="signup" aria-labelledby="signup-title">
+        <h2 id="signup-title">Don't miss news, scholarship and grant deadlines.</h2>
+        <p>Enter your email and we'll let you know when applications open.</p>
+        <form id="signup-form" novalidate>
+          <label for="signup-email">Your email</label>
+          <input id="signup-email" type="email" name="email" autocomplete="email" placeholder="name@example.com" required>
+          <button class="btn btn-red" type="submit">Sign up</button>
+          <p class="form-note" id="signup-note" role="status" aria-live="polite"></p>
+        </form>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section programs" id="help">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">How we help</p>
+          <h2 class="h2">Three ways we put money behind a veteran's next step.</h2>
+        </div>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <figure>
+            <img src="assets/IMG_1771.jpg" alt="A group on an outdoor stage presents a large Hats Off For Veterans scholarship check for two thousand dollars." loading="lazy">
+          </figure>
+          <h3>Higher Education Scholarships</h3>
+          <p>For veterans pursuing their first higher education degree. The GI Bill covers a lot; this scholarship goes a step further.</p>
+          <a class="more" href="https://ohofv.org/educational-scholarships" target="_blank" rel="noopener">Scholarship details</a>
+        </article>
+
+        <article class="card">
+          <figure>
+            <img src="assets/jg-hercules.jpg" alt="A woman in a maroon shirt and cap stands beside a chestnut horse." style="object-position:50% 62%" loading="lazy">
+            <span class="chip closed">Currently closed</span>
+          </figure>
+          <h3>Professional Development Grants</h3>
+          <p>Up to $500 per application toward certification and licensing exams, registration fees, courses, conferences and workshops.</p>
+          <a class="more" href="https://ohofv.org/professional-development" target="_blank" rel="noopener">What the grant covers</a>
+        </article>
+
+        <article class="card">
+          <figure>
+            <img src="assets/jq-kyle-pringle.jpg" alt="U.S. Army veteran Kyle Pringle receives a one thousand dollar scholarship check on stage." loading="lazy">
+            <span class="chip">Opens April 1, 2027</span>
+          </figure>
+          <h3>MSG Jimmie Quintero Scholarship</h3>
+          <p>For Texas high school seniors who have committed to enlist in any branch of the U.S. Armed Forces. Two $500 scholarships in 2027.</p>
+          <a class="more" href="https://ohofv.org/msg-jq-scholarship" target="_blank" rel="noopener">About the scholarship</a>
+        </article>
+      </div>
+
+      <div class="also">
+        <b>Also</b>
+        <a href="https://ohofv.org/workforce-assistance" target="_blank" rel="noopener">Workforce Assistance</a>
+        <a href="https://ohofv.org/va-and-legal-resources" target="_blank" rel="noopener">VA and Legal Resources</a>
+        <a href="https://ohofv.org/mental-health-resources" target="_blank" rel="noopener">Mental Health Resources</a>
+        <a href="https://ohofv.org/suicide%7Ccrisis-resources" target="_blank" rel="noopener">Suicide &amp; Crisis Resources</a>
+        <a href="https://ohofv.org/special-programs" target="_blank" rel="noopener">Punk Brats podcast</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section connect on-dark" id="connect">
+    <div class="wrap">
+      <p class="eyebrow">Courage to Connect</p>
+      <h2 class="h2">You are never alone. Never.</h2>
+      <p class="lede">Two free, peer-to-peer support groups on Zoom, open worldwide and hosted by HOFV volunteers and veteran peers.</p>
+      <ul class="assure">
+        <li>Confidential and never recorded</li>
+        <li>No registration</li>
+        <li>Video, audio, or just listen</li>
+      </ul>
+
+      <div class="groups">
+        <article class="group">
+          <h3>For veterans living with PTSD</h3>
+          <p>Every age, generation, branch, rank and circumstance. First names only, or stay anonymous.</p>
+          <dl>
+            <dt>Meets</dt><dd>First Monday of every month, 7:00 PM Central</dd>
+            <dt>Next</dt><dd>Monday, November 2, 2026</dd>
+            <dt>Zoom ID</dt><dd>861 1519 2209</dd>
+          </dl>
+          <a class="btn btn-ghost" href="https://us02web.zoom.us/j/86115192209" target="_blank" rel="noopener">Join on Zoom</a>
+        </article>
+        <article class="group">
+          <h3>PTSD By Proxy</h3>
+          <p>For anyone who lives with or cares for someone with PTSD, or is grieving a suicide loss. First responders and their families are welcome.</p>
+          <dl>
+            <dt>Meets</dt><dd>Third Wednesday of every month, 10:00 AM Central</dd>
+            <dt>Next</dt><dd>Wednesday, October 21, 2026</dd>
+            <dt>Zoom ID</dt><dd>885 0835 0334</dd>
+          </dl>
+          <a class="btn btn-ghost" href="https://us02web.zoom.us/j/88508350334" target="_blank" rel="noopener">Join on Zoom</a>
+        </article>
+      </div>
+
+      <p class="crisis">These groups are peer support, not treatment. If you or someone you love is in crisis, dial <strong>988, then press 1</strong> for the Veterans Crisis Line. <a href="https://ohofv.org/suicide%7Ccrisis-resources" target="_blank" rel="noopener">More crisis resources</a></p>
+    </div>
+  </section>
+
+  <section class="section voices" id="voices">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">In their words</p>
+        <h2 class="h2">Hear directly from the veterans we serve.</h2>
+        <blockquote class="quote-lead">
+          <p>What stands out most is that Hats Off For Veterans understands the GI Bill does not cover every financial or personal challenge veterans face while transitioning to higher education.</p>
+          <cite>Logan H., U.S. Navy · 2026 Higher Education Scholarship recipient</cite>
+        </blockquote>
+      </div>
+      <div class="quote-list">
+        <blockquote>
+          <p>The grant from HOFV was invaluable, covering my registration fees and enabling me to fully focus on the professional development workshop without financial worries.</p>
+          <cite>Jennifer G., U.S. Marines</cite>
+        </blockquote>
+        <blockquote>
+          <p>I truly appreciate HOFV investing in veterans and our futures.</p>
+          <cite>James H., U.S. Army</cite>
+        </blockquote>
+        <a class="more" href="https://ohofv.org/testimonials" target="_blank" rel="noopener">Read every testimonial</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section events" id="events">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">What's coming up</p>
+          <h2 class="h2">Events and meetings</h2>
+        </div>
+        <a class="more" href="https://ohofv.org/events" target="_blank" rel="noopener">All events</a>
+      </div>
+      <div class="cols">
+        <ol class="agenda">
+          <li>
+            <div class="date"><b>Oct</b><span>16</span><small>Fri · 2026</small></div>
+            <div>
+              <h3>3rd Annual Harry Potter Enchanted Yule Ball</h3>
+              <p>6:30 PM · Texas Old Town, Kyle. A magical evening benefiting Texas veterans.</p>
+              <a class="more" href="https://www.eventbrite.com/e/3rd-annual-hats-off-for-veterans-harry-potter-enchanted-yule-ball-tickets-1978211217002" target="_blank" rel="noopener">Tickets and sponsorships</a>
+            </div>
+          </li>
+          <li>
+            <div class="date"><b>Oct</b><span>21</span><small>Wed · 2026</small></div>
+            <div>
+              <h3>Courage to Connect: PTSD By Proxy</h3>
+              <p>10:00 AM Central · Zoom. Free and confidential.</p>
+              <a class="more" href="#connect">How to join</a>
+            </div>
+          </li>
+          <li>
+            <div class="date"><b>Nov</b><span>2</span><small>Mon · 2026</small></div>
+            <div>
+              <h3>Courage to Connect: Veterans Navigating PTSD</h3>
+              <p>7:00 PM Central · Zoom. Come and go as you're comfortable.</p>
+              <a class="more" href="#connect">How to join</a>
+            </div>
+          </li>
+          <li>
+            <div class="date"><b>Apr</b><span>18</span><small>Sun · 2027</small></div>
+            <div>
+              <h3>Operation: Hats Off For Veterans Family BBQ and Resource Fair</h3>
+              <p>The Reagan Hicks Band, Black's Original BBQ and a full lineup of resource vendors. The resource fair is free for all veterans and their families.</p>
+              <a class="more" href="https://ohofv.org/2027-o%3Ahofv" target="_blank" rel="noopener">Details and sponsorships</a>
+            </div>
+          </li>
+        </ol>
+        <figure>
+          <img src="assets/audience-pledge.jpg" alt="Families and veterans stand together on the lawn among resource-fair tents at the 2025 Hats Off For Veterans BBQ." loading="lazy">
+          <figcaption>The crowd at the 2025 BBQ and Resource Fair.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section story" id="story">
+    <div class="wrap">
+      <figure>
+        <img src="assets/1C7A9266.jpg" alt="Three musicians perform on a wooden outdoor stage; one wears an Army shirt and cowboy hat." loading="lazy">
+        <figcaption>Texas country artist Roger Creager (center) with his father, decorated U.S. Army veteran William "Bill" Creager (right), at the 2022 event.</figcaption>
+      </figure>
+      <div>
+        <p class="eyebrow">Our history</p>
+        <h2 class="h2">It started as a family BBQ for hospice patients.</h2>
+        <p>Founder and CEO Lisa Adams created Hats Off For Hospice in 2005 to fulfil end-of-life wishes: fishing trips, family portraits, even a hot air balloon ride. As the need among local veterans and their families grew, the community that built it chose a new mission.</p>
+        <ol class="timeline">
+          <li><b>2005</b><span>The first Hats Off For Hospice BBQ fundraiser.</span></li>
+          <li><b>2023</b><span>Becomes Hats Off For Veterans Inc., a 501(c)(3) nonprofit.</span></li>
+          <li><b>2024</b><span>A Pedernales Electric Cooperative technology grant expands Courage to Connect.</span></li>
+          <li><b>2027</b><span>The next BBQ and Resource Fair: Sunday, April 18.</span></li>
+        </ol>
+        <a class="more" href="https://ohofv.org/history-1" target="_blank" rel="noopener">Read the full history</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section involve" id="give">
+    <div class="wrap">
+      <p class="eyebrow">Stand with us</p>
+      <h2 class="h2">Every hour and every dollar here is given.</h2>
+      <div class="ways">
+        <div class="way">
+          <h3>Donate</h3>
+          <p>Support a veteran's education, professional development and mental health goals. All HOFV donations are tax-deductible. EIN 93-2881793.</p>
+          <a class="btn btn-red" href="https://ohofv.org/donate-1" target="_blank" rel="noopener">Give today</a>
+        </div>
+        <div class="way">
+          <h3>Volunteer</h3>
+          <p>Our volunteers are the whole organization. Tell us about yourself and how you'd like to contribute.</p>
+          <a class="btn btn-line" href="https://ohofv.org/volunteer-with-hofv" target="_blank" rel="noopener">Volunteer application</a>
+        </div>
+        <div class="way">
+          <h3>Partner or sponsor</h3>
+          <p>Sponsor the 2027 BBQ, plan a gift, or bring HOFV to your event as a community outreach partner.</p>
+          <a class="btn btn-line" href="https://ohofv.org/partner-with-hofv" target="_blank" rel="noopener">Partner with HOFV</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h2>Hats Off For Veterans</h2>
+        <p class="about">Volunteers helping veterans and their families. Serving all Texas veterans, headquartered in Hays County.</p>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="tel:+15126825333">512-682-5333</a></li>
+          <li><a href="mailto:Info@HOFV.org">Info@HOFV.org</a></li>
+          <li><a href="https://ohofv.org/contact-1" target="_blank" rel="noopener">Contact form</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Get help</h3>
+        <ul>
+          <li><a href="https://ohofv.org/educational-scholarships" target="_blank" rel="noopener">Scholarships</a></li>
+          <li><a href="https://ohofv.org/professional-development" target="_blank" rel="noopener">Professional Development</a></li>
+          <li><a href="https://ohofv.org/mental-health-resources" target="_blank" rel="noopener">Mental Health Resources</a></li>
+          <li><a href="https://ohofv.org/suicide%7Ccrisis-resources" target="_blank" rel="noopener">Crisis Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Follow</h3>
+        <ul>
+          <li><a href="https://www.facebook.com/OperationHatsOffForVeterans/" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://www.instagram.com/hatsoffforveterans" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/company/hatsoffforveterans/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.tiktok.com/@hatsoffforveterans" target="_blank" rel="noopener">TikTok</a></li>
+          <li><a href="https://www.youtube.com/channel/UCZCl2qCiMq2ZBsvwMl5SB_Q" target="_blank" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>Copyright &copy; 2023&ndash;2026 Hats Off For Veterans Inc. All rights reserved.</span>
+      <span>Texas 501(c)(3) Nonprofit Organization · EIN 93-2881793</span>
+    </div>
+  </div>
+</footer>
+
+<div class="concept-tag">Design concept for review · not the live site</div>
+
+<script>
+  // Mobile menu
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.getElementById('site-nav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+    toggle.textContent = open ? 'Close' : 'Menu';
+  });
+
+  // Hero slideshow: rotates every 6 seconds; pauses on hover, on keyboard focus, or with the pause button.
+  (() => {
+    const root = document.getElementById('hero-slides');
+    const slides = [...root.querySelectorAll('.slide')];
+    const dotsBox = root.querySelector('.slide-dots');
+    const toggleBtn = root.querySelector('[data-slide="toggle"]');
+    let i = 0, timer = null, userPaused = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const dots = slides.map((_, n) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Photo ' + (n + 1) + ' of ' + slides.length);
+      b.addEventListener('click', () => { show(n); restart(); });
+      dotsBox.append(b);
+      return b;
+    });
+    function show(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => { s.classList.toggle('is-active', k === i); s.setAttribute('aria-hidden', k !== i); });
+      dots.forEach((d, k) => d.setAttribute('aria-current', k === i));
+    }
+    function stop() { clearInterval(timer); timer = null; }
+    function start() { if (!userPaused && !timer) timer = setInterval(() => show(i + 1), 6000); }
+    function restart() { stop(); start(); }
+    function label() {
+      toggleBtn.innerHTML = userPaused ? '&#9654;' : '&#10073;&#10073;';
+      toggleBtn.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
+    }
+    root.querySelector('[data-slide="prev"]').addEventListener('click', () => { show(i - 1); restart(); });
+    root.querySelector('[data-slide="next"]').addEventListener('click', () => { show(i + 1); restart(); });
+    toggleBtn.addEventListener('click', () => { userPaused = !userPaused; label(); userPaused ? stop() : start(); });
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+    show(0); label(); start();
+  })();
+
+  // Sign-up is a mock in this concept: nothing is sent or stored.
+  const form = document.getElementById('signup-form');
+  const note = document.getElementById('signup-note');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = form.email.value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      note.textContent = 'Please enter a valid email address.';
+      form.email.focus();
+      return;
+    }
+    note.textContent = 'Concept preview: on the live site this would add you to the HOFV email list.';
+    form.reset();
+  });
+</script>
+</body>
+</html>
